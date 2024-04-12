@@ -42,18 +42,7 @@ def health():
 @app.route("/")
 def index():
     """Root URL response"""
-    return jsonify(
-        {
-            "urls": [
-                url_for("index", _external=True),
-                url_for("create_products", _method="POST", _external=True),
-                url_for("list_products", _external=True),
-                url_for("read_products", product_id=1, _external=True),
-                url_for("delete_products", product_id=1, _external=True),
-                url_for("like_product", _method="POST", product_id=1, _external=True),
-            ]
-        }
-    )
+    return app.send_static_file("index.html")
 
 
 ######################################################################
