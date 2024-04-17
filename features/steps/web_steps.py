@@ -33,7 +33,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select, WebDriverWait
 from selenium.webdriver.support import expected_conditions
 
-
 ID_PREFIX = "product_"
 
 
@@ -177,3 +176,29 @@ def step_impl(context, element_name, text_string):
     )
     element.clear()
     element.send_keys(text_string)
+
+
+@then("I should see all details for the product in a modal")
+def step_impl(context):
+    WebDriverWait(context.driver, 10).until(
+        expected_conditions.visibility_of_element_located(
+            (By.ID, "productDetailsModal")
+        )
+    )
+    modal = context.driver.find_element(By.ID, "productDetailsModal")
+    assert modal.is_displayed(), "Modal is not displayed"
+    # Check for specific fields within the modal
+    details = [
+        "detail-name",
+        "detail-img_url",
+        "detail-description",
+        "detail-price",
+        "detail-rating",
+        "detail-category",
+        "detail-status",
+        "detail-likes",
+    ]
+    for detail in details:
+        assert (
+            context.driver.find_element(By.ID, detail).get_attribute("value") != ""
+        ), f"{detail} is empty"
