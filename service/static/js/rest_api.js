@@ -233,27 +233,27 @@ $(function () {
         let queryString = ""
 
         if (name) {
-            queryString += 'name=' + name
+            queryString += '?name=' + name
         }
         if (category) {
             if (queryString.length > 0) {
                 queryString += '&category=' + category
             } else {
-                queryString += 'category=' + category
+                queryString += '?category=' + category
             }
         }
         if (price) {
             if (queryString.length > 0) {
                 queryString += '&price=' + price
             } else {
-                queryString += 'price=' + price
+                queryString += '?price=' + price
             }
         }
         if (rating) {
             if (queryString.length > 0) {
                 queryString += '&rating=' + rating
             } else {
-                queryString += 'rating=' + rating
+                queryString += '?rating=' + rating
             }
         }
 
@@ -261,7 +261,7 @@ $(function () {
 
         let ajax = $.ajax({
             type: "GET",
-            url: `${root}?${queryString}`,
+            url: `${root}${queryString}`,
             contentType: "application/json",
             data: ''
         })

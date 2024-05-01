@@ -63,6 +63,18 @@ Scenario: List all Products
    And I should see "coke" in the results
    And I should not see "milk" in the results
 
+#####################################################################
+#                 Search product by name scenario                   #
+#####################################################################
+Scenario: Search product by name
+   When I visit the "Home Page"
+   And I change "Name" to "hamburger"
+   And I press the "Search" button
+   Then I should see the message "Success"
+   And I should see "hamburger" in the results
+   And I should not see "coke" in the results
+   And I should not see "milk" in the results
+
 
 #####################################################################
 #                       Update scenario                             #

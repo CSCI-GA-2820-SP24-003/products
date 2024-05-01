@@ -213,6 +213,8 @@ class Product(db.Model):
                     )
                 else:
                     query_obj = query_obj.filter(cls.price == float(value))
+            elif key == "name":
+                query_obj = query_obj.filter(cls.name.ilike(f"%{value}%"))
         return query_obj.all()
 
     ##################################################
