@@ -158,6 +158,7 @@ class Product(db.Model):
             self.rating = data.get("rating", 0.0)
             self.category = data.get("category")
             self.status = Status[data.get("status", "active").upper()]
+            self.likes = data.get("likes", 0)
         except AttributeError as error:
             raise DataValidationError("Invalid attribute: " + error.args[0]) from error
         except KeyError as error:
