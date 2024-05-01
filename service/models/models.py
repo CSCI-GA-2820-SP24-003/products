@@ -158,14 +158,10 @@ class Product(db.Model):
             self.rating = data.get("rating", 0.0)
             self.category = data.get("category")
             self.status = Status[data.get("status", "active").upper()]
-            if "likes" in data:
-                if isinstance(data["likes"], int):
-                    self.likes = data["likes"]
-                else:
-                    try:
-                        self.likes = int(data["likes"])
-                    except ValueError:
-                        self.likes = 0
+            try:
+                self.likes = int(data.get(["likes"], 0))
+            except ValueError:
+                self.likes = 0
         except AttributeError as error:
             raise DataValidationError("Invalid attribute: " + error.args[0]) from error
         except KeyError as error:
