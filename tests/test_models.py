@@ -116,6 +116,14 @@ class TestProduct(TestCase):
         product.like()
         self.assertEqual(product.likes, initial_likes + 1)
 
+    @patch("service.models.models.db.session.commit")
+    def test_like_a_product_failed(self, exception_mock):
+        """It should not like a product on database error"""
+        exception_mock.side_effect = Exception()
+        product = ProductFactory()
+        product.likes = 0
+        self.assertRaises(DataValidationError, product.like)
+
     def test_serialize_a_product(self):
         """It should serialize a Product"""
         product = ProductFactory()
@@ -311,6 +319,13 @@ class TestProduct(TestCase):
         product = ProductFactory()
         with self.assertRaises(DataValidationError):
             product.status = "invalid"
+            product.create()
+
+    def test_create_product_with_missing_status(self):
+        """It should not create a product with missing status"""
+        product = ProductFactory()
+        with self.assertRaises(DataValidationError):
+            product.status = None
             product.create()
 
     def test_create_product_with_invalid_likes_type(self):

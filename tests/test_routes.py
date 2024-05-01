@@ -68,7 +68,7 @@ class TestProductService(TestCase):
         return products
 
     ######################################################################
-    #  P L A C E   T E S T   C A S E S   H E R E
+    #  T E S T   C A S E S
     ######################################################################
 
     def test_health(self):
@@ -224,8 +224,14 @@ class TestProductService(TestCase):
         updated_product = response.get_json()
         self.assertIn("at most 120", updated_product["message"])
 
+    def test_update_nonexisting_product(self):
+        """It should return a HTTP 404 message"""
+        response = self.client.put(f"{BASE_URL}/10000000")
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+        logging.debug("not found")
+
     def test_query_by_category(self):
-        """It should Query Pets by category"""
+        """It should query products by category"""
         products = self._create_products(5)
         test_category = products[0].category
         category_count = len(
@@ -240,6 +246,50 @@ class TestProductService(TestCase):
         # check the data just to be sure
         for product in data:
             self.assertEqual(product["category"], test_category)
+
+    def test_query_by_name(self):
+        """It should query products by name"""
+        products = self._create_products(5)
+        test_name = products[0].name
+        name_count = len([product for product in products if product.name == test_name])
+        resp = self.client.get(BASE_URL, query_string=f"name={quote_plus(test_name)}")
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        data = resp.get_json()
+        self.assertEqual(len(data), name_count)
+        for product in data:
+            self.assertEqual(product["name"], test_name)
+
+    def test_query_by_price(self):
+        """It should query products by price"""
+        products = self._create_products(5)
+        test_price = products[0].price
+        price_count = len(
+            [product for product in products if product.price == test_price]
+        )
+        resp = self.client.get(
+            BASE_URL, query_string=f"price={quote_plus(str(test_price))}"
+        )
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        data = resp.get_json()
+        self.assertEqual(len(data), price_count)
+        for product in data:
+            self.assertEqual(product["price"], test_price)
+
+    def test_query_by_rating(self):
+        """It should query products by rating"""
+        products = self._create_products(5)
+        test_rating = products[0].rating
+        rating_count = len(
+            [product for product in products if product.rating == test_rating]
+        )
+        resp = self.client.get(
+            BASE_URL, query_string=f"rating={quote_plus(str(test_rating))}"
+        )
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        data = resp.get_json()
+        self.assertEqual(len(data), rating_count)
+        for product in data:
+            self.assertEqual(product["rating"], test_rating)
 
     def test_like_product(self):
         """It should increment the likes count of a product"""
