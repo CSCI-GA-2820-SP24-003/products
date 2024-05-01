@@ -125,6 +125,9 @@ product_args.add_argument(
 product_args.add_argument(
     "price", type=str, location="args", required=False, help="List Products by price"
 )
+product_args.add_argument(
+    "name", type=str, location="args", required=False, help="List Products by name"
+)
 
 ######################################################################
 #  R E S T   A P I   E N D P O I N T S
@@ -242,6 +245,9 @@ class ProductCollection(Resource):
         elif args["rating"]:
             app.logger.info("Filtering by rating: %s", args["rating"])
             products = Product.filter_by_query(rating=args["rating"])
+        elif args["name"]:
+            app.logger.info("Filtering by name: %s", args["name"])
+            products = Product.filter_by_query(name=args["name"])
         else:
             app.logger.info("Returning unfiltered list")
             products = Product.all()
