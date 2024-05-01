@@ -233,6 +233,23 @@ class TestProduct(TestCase):
         self.assertEqual(len(products), 1)
         self.assertEqual(products[0].price, 100.0)
 
+    def test_filter_by_name(self):
+        """It should filter products by name"""
+        # create some products using the factory
+        ProductFactory(name="Car").create()
+        ProductFactory(name="Hamburger").create()
+        ProductFactory(name="House").create()
+
+        # filter products by name
+        products = Product.filter_by_query(name="Car")
+        self.assertEqual(len(products), 1)
+        self.assertEqual(products[0].name, "Car")
+
+        products = Product.filter_by_query(name="H")
+        self.assertEqual(len(products), 2)
+        self.assertEqual(products[0].name, "Hamburger")
+        self.assertEqual(products[1].name, "House")
+
     ######################################################################
     #  D A T A   V A L I D A T I O N   T E S T   C A S E S
     ######################################################################
