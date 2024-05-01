@@ -61,6 +61,7 @@ Scenario: List all Products
    Then I should see the message "Success"
    And I should see "hamburger" in the results
    And I should see "coke" in the results
+   And I should see "water" in the results
    And I should not see "milk" in the results
 
 #####################################################################
@@ -73,12 +74,13 @@ Scenario: Search product by name
    Then I should see the message "Success"
    And I should see "hamburger" in the results
    And I should not see "coke" in the results
-   And I should not see "milk" in the results
+   And I should not see "water" in the results
+   And I should not see "apple" in the results
 
 #####################################################################
 #                 Search product by price scenario                  #
 #####################################################################
-Scenario: Search product by name
+Scenario: Search product by price
    When I visit the "Home Page"
    And I change "Price" to "1-23"
    And I press the "Search" button
@@ -91,7 +93,7 @@ Scenario: Search product by name
 #####################################################################
 #                 Search product by rating scenario                 #
 #####################################################################
-Scenario: Search product by name
+Scenario: Search product by rating
    When I visit the "Home Page"
    And I change "Rating" to "4.6"
    And I press the "Search" button
@@ -104,7 +106,7 @@ Scenario: Search product by name
 #####################################################################
 #                 Search product by category scenario               #
 #####################################################################
-Scenario: Search product by name
+Scenario: Search product by category
    When I visit the "Home Page"
    And I change "Category" to "food"
    And I press the "Search" button
