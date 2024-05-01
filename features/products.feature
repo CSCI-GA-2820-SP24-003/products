@@ -87,8 +87,8 @@ Scenario: Search product by price
    Then I should see the message "Success"
    And I should see "apple" in the results
    And I should see "coke" in the results
+   And I should see "water" in the results
    And I should not see "hamburger" in the results
-   And I should not see "water" in the results
 
 #####################################################################
 #                 Search product by rating scenario                 #
