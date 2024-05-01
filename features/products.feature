@@ -82,13 +82,13 @@ Scenario: Search product by name
 #####################################################################
 Scenario: Search product by price
    When I visit the "Home Page"
-   And I change "Price" to "1-23"
+   And I change "Price" to "1-3"
    And I press the "Search" button
    Then I should see the message "Success"
    And I should see "apple" in the results
    And I should see "coke" in the results
-   And I should see "water" in the results
    And I should not see "hamburger" in the results
+   And I should not see "water" in the results
 
 #####################################################################
 #                 Search product by rating scenario                 #
