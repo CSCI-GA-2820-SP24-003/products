@@ -75,6 +75,45 @@ Scenario: Search product by name
    And I should not see "coke" in the results
    And I should not see "milk" in the results
 
+#####################################################################
+#                 Search product by price scenario                  #
+#####################################################################
+Scenario: Search product by name
+   When I visit the "Home Page"
+   And I change "Price" to "1-23"
+   And I press the "Search" button
+   Then I should see the message "Success"
+   And I should see "apple" in the results
+   And I should see "coke" in the results
+   And I should not see "hamburger" in the results
+   And I should not see "water" in the results
+
+#####################################################################
+#                 Search product by rating scenario                 #
+#####################################################################
+Scenario: Search product by name
+   When I visit the "Home Page"
+   And I change "Rating" to "4.6"
+   And I press the "Search" button
+   Then I should see the message "Success"
+   And I should see "apple" in the results
+   And I should see "hamburger" in the results
+   And I should not see "coke" in the results
+   And I should not see "water" in the results
+
+#####################################################################
+#                 Search product by category scenario               #
+#####################################################################
+Scenario: Search product by name
+   When I visit the "Home Page"
+   And I change "Category" to "food"
+   And I press the "Search" button
+   Then I should see the message "Success"
+   And I should see "hamburger" in the results
+   And I should not see "apple" in the results
+   And I should not see "coke" in the results
+   And I should not see "water" in the results
+
 
 #####################################################################
 #                       Update scenario                             #
