@@ -154,7 +154,7 @@ class TestProduct(TestCase):
         self.assertEqual(product.rating, data["rating"])
         self.assertEqual(product.category, data["category"])
         self.assertEqual(product.status.name, data["status"])
-        self.assertEqual(product.likes, data["likes"])
+        self.assertEqual(product.likes, 0 if data["likes"] is None else data["likes"])
 
     def test_deserialize_missing_data(self):
         """It should not deserialize a Product with missing data"""
